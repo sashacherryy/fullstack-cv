@@ -1,5 +1,4 @@
 import { Provider } from "@/components/provider";
-import Link from "next/dist/client/link";
 
 export default function RootLayout({
   children,
@@ -7,10 +6,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk">
-      <body>
-          <Provider>{children}</Provider>
-      </body>
-    </html>
+    <>
+      <header>header Admin</header>
+      <>{children}</>
+      <footer>FOOTER</footer>
+    </>
   );
 }
