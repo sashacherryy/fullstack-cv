@@ -5,6 +5,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { HealthModule } from './health/health.module';
 
 import { ConfigModule } from '@nestjs/config';
+import { DbModule } from './database/db.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
     , ConfigModule.forRoot({
       isGlobal: true,
     })
+    , DbModule
   ],
   controllers: [AppController],
   providers: [AppService],
