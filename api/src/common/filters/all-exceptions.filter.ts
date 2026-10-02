@@ -12,6 +12,8 @@ export class AllExceptionsFilter implements ExceptionFilter{
             const status = exception.getStatus()
             const errorResponse = exception.getResponse()
 
+            if (status >= 500) console.error(errorResponse)
+
             if(typeof errorResponse == 'string'){
                 return response
                         .status(status)
