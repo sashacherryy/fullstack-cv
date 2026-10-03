@@ -1,14 +1,16 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DbService } from '../../database/db.service'
+import { ContactsService } from '../contacts/contacts.service'
 import { profiles } from '../../database/schema'
 import { eq } from 'drizzle-orm'
 
 @Injectable()
 export class ProfileService  {
-    constructor(private readonly db: DbService){}
+    constructor(private readonly db: DbService, private readonly contactsService: ContactsService){}
 
     async getProfile(){
-        let profile = await this.db.db
+        const [profileRows, contactsRows] = await Promise.all(
+            [this.db.db
             .select({
                 photoUrl: profiles.photoUrl
                 , firstNameUa: profiles.firstNameUa
@@ -28,20 +30,25 @@ export class ProfileService  {
                 , workStatusEn: profiles.workStatusEn
             })
             .from(profiles)
-            .where(eq(profiles.id, 1))
+            .where(eq(profiles.id, 1)), 
+            
+            this.contactsService.findByProfileId(1)
+        ])
         
-        if(profile.length === 0) throw new InternalServerErrorException('Профіль не знайдено')
+        if(profileRows.length === 0) throw new InternalServerErrorException('Профіль не знайдено')
         
         let result: Record<string, any> = {
             ua: {},
             en: {}
         }
 
-        Object.keys(profile[0]).forEach((key) => {
-            if(key.endsWith('Ua')) result["ua"][key.slice(0, -2)] = profile[0][key as keyof typeof profile[0]]
-            else if(key.endsWith('En')) result["en"][key.slice(0, -2)] = profile[0][key  as keyof typeof profile[0]]
-            else result[key] = profile[0][key as keyof typeof profile[0]]
+        Object.keys(profileRows[0]).forEach((key) => {
+            if(key.endsWith('Ua')) result["ua"][key.slice(0, -2)] = profileRows[0][key as keyof typeof profileRows[0]]
+            else if(key.endsWith('En')) result["en"][key.slice(0, -2)] = profileRows[0][key  as keyof typeof profileRows[0]]
+            else result[key] = profileRows[0][key as keyof typeof profileRows[0]]
         })
+
+        result["socialmedia"] = contactsRows
 
         return result
     }
