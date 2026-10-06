@@ -6,6 +6,8 @@ import { HealthModule } from './health/health.module';
 import { ProfileModule } from './profile/profile.module'
 import { ConfigModule } from '@nestjs/config';
 import { DbModule } from '../database/db.module';
+import { AuthModule } from './auth/auth.module';
+import { OwnerModule } from './owner/owner.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { DbModule } from '../database/db.module';
     })
     , DbModule
     , ProfileModule
+    , AuthModule
+    , OwnerModule
   ],
   controllers: [AppController],
   providers: [AppService],
