@@ -1,13 +1,18 @@
-import { Controller,  Patch } from '@nestjs/common';
+import { Controller,  Patch, Req, UseGuards } from '@nestjs/common';
 import { OwnerService } from './owner.service';
+import { OwnerGuard } from '../../common/guards/owner.guards';
+import type { Request } from 'express' 
 
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Patch()
-  update() {
-    return 0
+  @UseGuards(OwnerGuard)
+  update(@Req() request: Request) {
+    return { 
+      ownerId: request.ownerId
+    }
   }
 
 }

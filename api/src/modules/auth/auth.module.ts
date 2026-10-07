@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt'
     OwnerModule
     , JwtModule.register({ 
         secret: process.env.JWT_SECRET
+        , global: true
         , signOptions:
           { 
             expiresIn: '15m' 
@@ -17,6 +18,6 @@ import { JwtModule } from '@nestjs/jwt'
   ]
   , controllers: [AuthController]
   , providers: [AuthService]
-  , exports: [AuthService]
+  , exports: [ AuthService ]
 })
 export class AuthModule {}
