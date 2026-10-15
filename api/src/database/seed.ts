@@ -2,8 +2,11 @@ import 'dotenv/config'
 import * as pg from 'pg'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import * as schema from './schema'
-
+import hashPassword from '../common/func/hashPassword'
+ 
 const db_url = process.env.DATABASE_URL
+const PASSWORD_ADMIN = process.env.PASSWORD_ADMIN
+const EMAIL_ADMIN= process.env.EMAIL_ADMIN
 
 if(!db_url) throw new Error('DATABASE_URL is not defined')
 
@@ -17,6 +20,11 @@ const db = drizzle(pool, {
 })
 
 async function seedData() {
+
+    // ========================
+    // 1 SEED PROFILE DATA
+    // ========================
+
     // await db
     //     .insert(schema.profiles)
     //     .values({
@@ -39,6 +47,10 @@ async function seedData() {
     //         , workStatusEn: "Looking for a job"
     //     })
     //     .onConflictDoNothing()
+
+    // ========================
+    // 2 SEED PROJECTS DATA
+    // ========================
 
     // await db
     //     .insert(schema.projects)
@@ -79,6 +91,23 @@ async function seedData() {
     //         , sortOrder: 7
     //     }
     // ]).onConflictDoNothing()    
+
+    // ========================
+    // 3 SEED OWNER DATA
+    // ========================
+    
+    // if(!EMAIL_ADMIN) throw new Error('EMAIL_ADMIN is not defined')
+    // if(!PASSWORD_ADMIN) throw new Error('PASSWORD_ADMIN is not defined')
+
+    // const hashedPassword = await hashPassword(PASSWORD_ADMIN)
+    
+    // await db
+    //     .insert(schema.owner)
+    //     .values({
+    //         id: 1
+    //         , email: EMAIL_ADMIN
+    //         , passwordHash: hashedPassword
+    //     }).onConflictDoNothing()
 
 }
 
