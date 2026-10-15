@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt'
 export class AuthService {
   constructor(private readonly ownerService: OwnerService,  private readonly jwtService: JwtService){}
 
+  
   async login(dto: z.infer<typeof loginDto>) {
     const { email, password } = dto
     let owner = await this.ownerService.findByEmail(email.trim())

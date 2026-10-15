@@ -34,6 +34,14 @@ export class AllExceptionsFilter implements ExceptionFilter{
                         })
             }
 
+            return response
+                    .status(status)
+                    .json({
+                status: "error"
+                , code: status
+                , message: errorResponse
+            })
+
         } else {
             console.error(exception)
             return response

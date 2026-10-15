@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { OwnerModule } from '../owner/owner.module';
 import { JwtModule } from '@nestjs/jwt'
+import { ThrottlerModule } from '@nestjs/throttler'
+ 
 
 @Module({
   imports: [
