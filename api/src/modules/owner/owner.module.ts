@@ -7,7 +7,6 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [ 
     DbModule
-    , JwtModule
   ]
   , controllers: [OwnerController]
   , providers: [OwnerService]

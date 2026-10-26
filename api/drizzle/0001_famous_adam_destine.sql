@@ -1,0 +1,1 @@
+ALTER TABLE "projects" DROP CONSTRAINT "projects_sort_order_unique";

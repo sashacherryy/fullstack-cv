@@ -92,6 +92,6 @@ export const projects = pgTable('projects',{
   , code: varchar('code', {
     length:255
   }).unique()
-  , sortOrder: integer('sort_order').unique().notNull()
+  , sortOrder: integer('sort_order').notNull()
 })
 
